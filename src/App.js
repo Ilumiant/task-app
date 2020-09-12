@@ -1,13 +1,13 @@
 import React from 'react';
-import Tasks from './components/Tasks';
-import CreateTask from './components/CreateTask';
+import './styles/bootstrap.min.css'
+import Menu from './components/Menu'
+import ListTasks from './components/ListTasks';
 
 function App() {
   return (
     <>
-      <Tasks />
-      <hr/>
-      <CreateTask />
+      <Menu />
+      <ListTasks />
     </>
   );
 }
