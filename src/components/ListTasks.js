@@ -22,7 +22,11 @@ const ListTasks = () => {
   function getTasks() {
     Axios.get("http://localhost/task/public/api/v1/tasks")
       .then(response => {
-        setTasks(response.data)
+        const tasksAux = response.data.map(task => {
+          task.isCreated = true
+          return task
+        })
+        setTasks(tasksAux)
         setLoading(false)
       })
   }
@@ -32,6 +36,7 @@ const ListTasks = () => {
     const tasksAux = [...tasks]
     tasksAux.push({
       id: tasks[tasks.length-1].id + 1,
+      isCreated: false,
       ...datos
     })
     setTasks(tasksAux)
@@ -39,6 +44,7 @@ const ListTasks = () => {
       .then(response => {
         getTasks()
         setCreatingTask(false)
+        setSuccess(true)
       })
   }
   return (
@@ -51,14 +57,26 @@ const ListTasks = () => {
             (<ListGroup className="text-left">
               {tasks.map(task => {
                 return (
-                  <ListGroup.Item key={task.id}>{task.id}. {task.name}</ListGroup.Item>
+                  <ListGroup.Item 
+                    key={task.id}
+                    style={{ 
+                      backgroundColor: task.isCreated ? "white" : "#ddd",
+                    }}
+                  >
+                    {task.number}. {task.name}
+                  </ListGroup.Item>
                 )
               })}
             </ListGroup>)
           }
         </Col>
         <Col  xs={12} md={6} >
-          <CreateTask submit={submitTask} creatingTask={creatingTask} />
+          <CreateTask 
+            submit={submitTask} 
+            creatingTask={creatingTask}
+            success={success}
+            setSuccess={setSuccess}
+          />
         </Col>
       </Row>
     </Container>

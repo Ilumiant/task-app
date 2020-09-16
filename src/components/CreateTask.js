@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Button,
   Card,
@@ -11,6 +11,21 @@ const CreateTask = (props) => {
   const [descripcion, setDescripcion] = useState("")
   const [numero, setNumero] = useState(0)
   const [hecha, setHecha] = useState(false)
+
+  useEffect(() => {
+    if (props.success) {
+      resetForm()
+    }
+    
+  }, [props.success])
+
+  function resetForm() {
+    setNombre("")
+    setDescripcion("")
+    setNumero(0)
+    setHecha(false)
+    props.setSuccess(false)
+  }
 
   return (
     <Card className="mt-3">
