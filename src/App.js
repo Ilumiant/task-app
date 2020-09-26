@@ -1,15 +1,15 @@
-import React from 'react';
-import Tasks from './components/Tasks';
-import CreateTask from './components/CreateTask';
-
+import React from 'react'
+import { Container } from 'react-bootstrap';
+import Menu from '../src/borrar/Menu'
+import List from './borrar/List'
+import './styles/bootstrap.min.css'
 function App() {
   return (
-    <>
-      <Tasks />
-      <hr/>
-      <CreateTask />
-    </>
+    <Container>
+      <Menu/>
+      <List/>
+    </Container>
   );
 }
-
 export default App;
+
