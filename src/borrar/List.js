@@ -76,6 +76,17 @@ function getTask() {
     Axios.post(`${API_URL}/login`,credenciales)
     .then((response)=>{
         console.log(response.data)
+        localStorage.setItem("token", response.data.access_token)
+      }
+    )
+  }
+
+  function getMe () {
+    let token = localStorage.getItem('token');
+    Axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    Axios.post(`${API_URL}/me`)
+    .then((response)=>{
+        console.log(response.data)
       }
     )
   }
