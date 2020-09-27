@@ -4,6 +4,7 @@ import { Col, Row, Spinner, Table } from 'react-bootstrap'
 import Formulario from './Formulario'
 import Formulario2 from './Formulario2'
 import Formulario2Otro from './Formulario2Otro'
+import { API_URL } from '../constants'
 
 
 const List = () => {
@@ -38,7 +39,7 @@ const List = () => {
  }
 
 function getTask() {
-  Axios.get('http://localhost/task-api/public/api/v1/tasks')
+  Axios.get(`${API_URL}/tasks`)
   .then(
       (event)=>
       setTasks(event.data),
@@ -55,7 +56,7 @@ function getTask() {
       ...datos
     })
     setTasks(tasksAux)
-  Axios.post('http://localhost/task-api/public/api/v1/tasks',datos)
+  Axios.post(`${API_URL}/tasks`,datos)
   .then(
     ()=>{
       getTask()
@@ -68,7 +69,7 @@ function getTask() {
   }
 
   function Eliminar (id) {
-    Axios.delete(`http://localhost/task-api/public/api/v1/tasks/${id}`)
+    Axios.delete(`${API_URL}/tasks/${id}`)
     .then( ()=>{
         getTask()
       }
@@ -76,7 +77,7 @@ function getTask() {
   }
 
   function Editar (id,datos) {
-      Axios.put(`http://localhost/task-api/public/api/v1/tasks/${id}`,datos)
+      Axios.put(`${API_URL}/tasks/${id}`,datos)
       .then(
         ()=>{
           getTask()

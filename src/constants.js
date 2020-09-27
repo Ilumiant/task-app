@@ -1,0 +1,1 @@
+export const API_URL = "http://localhost/task-api/public/api/v1"
