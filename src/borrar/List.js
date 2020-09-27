@@ -68,6 +68,18 @@ function getTask() {
   )
   }
 
+  function login () {
+    const credenciales = {
+      email: "jose@mail.com",
+      password: "123123" 
+    }
+    Axios.post(`${API_URL}/login`,credenciales)
+    .then((response)=>{
+        console.log(response.data)
+      }
+    )
+  }
+
   function Eliminar (id) {
     Axios.delete(`${API_URL}/tasks/${id}`)
     .then( ()=>{
