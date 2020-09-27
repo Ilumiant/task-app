@@ -9,6 +9,7 @@ function App() {
       <Menu/>
       <List/>
     </Container>
+
   );
 }
 export default App;
