@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row, Spinner, Table } from 'react-bootstrap'
 import Formulario from './Formulario'
 import Formulario2 from './Formulario2'
+import Formulario2Otro from './Formulario2Otro'
 
 
 const List = () => {
@@ -18,6 +19,7 @@ const List = () => {
   const [takeDescription, setTakeDescription] = useState()
   const [takeNumber, setTakeNumber] = useState()
   const [takeDone, setTakeDone] = useState()
+  const [editTask, setEditTask] = useState({})
 //useEffect para traer los datos desde el servidor
     useEffect(() => {
         getTask()
@@ -31,6 +33,8 @@ const List = () => {
   setTakeDescription(task.description)
   setTakeNumber(task.number)
   setTakeDone(task.done)
+
+  setEditTask(task)
  }
 
 function getTask() {
@@ -66,7 +70,8 @@ function getTask() {
   function Eliminar (id) {
     Axios.delete(`http://localhost/task-api/public/api/v1/tasks/${id}`)
     .then( ()=>{
-    getTask()}
+        getTask()
+      }
     )
   }
 
@@ -74,7 +79,7 @@ function getTask() {
       Axios.put(`http://localhost/task-api/public/api/v1/tasks/${id}`,datos)
       .then(
         ()=>{
-
+          getTask()
         }
       )
   }
@@ -133,20 +138,30 @@ function getTask() {
       </Col>
       <Col className="col-6">
         {formularioEdit ?
-        (         <Formulario2
-          submit={submitTask}
-          botonLoanding={botonLoanding}
-          success={success}
-          setSuccess={setSuccess}
-          formularioEdit={formularioEdit}  
-          editRow={editRow}
-          takeId={takeId}
-          takeName={takeName}
-          takeDescription={takeDescription}
-          takeNumber={takeNumber}
-          takeDone={takeDone}
+        (         
+        <Formulario2Otro 
+          task={editTask}
           Editar={Editar}
-          />) :
+        />
+        // <Formulario2
+        //   submit={submitTask}
+        //   botonLoanding={botonLoanding}
+        //   success={success}
+        //   setSuccess={setSuccess}
+        //   formularioEdit={formularioEdit}  
+        //   editRow={editRow}
+        //   takeId={takeId}
+        //   takeName={takeName}
+        //   takeDescription={takeDescription}
+        //   takeNumber={takeNumber}
+        //   takeDone={takeDone}
+        //   setTakeName={setTakeName}
+        //   setTakeDescription={setTakeDescription}
+        //   setTakeNumber={setTakeNumber}
+        //   setTakeDone={setTakeDone}
+        //   Editar={Editar}
+        //   />
+        ) :
         (        <Formulario 
           submit={submitTask}
           botonLoanding={botonLoanding}

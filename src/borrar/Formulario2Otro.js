@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Card, Form, } from 'react-bootstrap'
 
-const Formulario2 = (props) => {
+const Formulario2Otro = (props) => {
   //useStates para el formulario
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [number, setNumber] = useState(0)
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    if (props.task.id !== undefined) {
+      setName(props.task.name)
+      setDescription(props.task.description)
+      setNumber(props.task.number)
+      setDone(props.task.done)
+    }
+  }, [props.task.id])
 
   return (
 <>   
@@ -13,10 +26,8 @@ const Formulario2 = (props) => {
       <Form.Group controlId="formNombre">
         <Form.Label>Nombre</Form.Label>
         <Form.Control type="text" placeholder="nombre de editar"
-        name="nombre"  value={props.takeName}
-        onChange={
-          (e)=>{props.setTakeName(e.target.value)}
-        }/>
+        name="nombre"  value={name}
+        onChange={ e => setName(e.target.value) }/>
         <Form.Text className="text-muted">
           debes colocar el nombre de la tarea a realizar
         </Form.Text>
@@ -25,18 +36,18 @@ const Formulario2 = (props) => {
       <Form.Group controlId="formDescripcion">
         <Form.Label>Descripcion</Form.Label>
         <Form.Control as="textarea" rows="3" placeholder="Descripcion"
-        name="drescripcion"  value={props.takeDescription}
+        name="drescripcion"  value={description}
         onChange={
-          (e)=>{props.setTakeDescription(e.target.value)}
+          (e)=>{setDescription(e.target.value)}
         }/>
       </Form.Group>
 
       <Form.Group controlId="formNumero">
         <Form.Label>Numero</Form.Label>
         <Form.Control type="number" placeholder="Numero de tarea" min={0} 
-        name="numero"  value={props.takeNumber}
+        name="numero"  value={number}
         onChange={
-          (e)=>{props.setTakeNumber(e.target.value)}
+          (e)=>{setNumber(e.target.value)}
         }
         />
         <Form.Text className="text-muted">
@@ -46,21 +57,14 @@ const Formulario2 = (props) => {
 
       <Form.Group controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Hecho"
-        name="hecho" value={props.takeHe} 
-        onChange={(e)=>{props.setTakeDone(e.target.checked)}}
-        checked={props.takeDone} 
+        name="hecho" value={done} 
+        onChange={(e)=>{setDone(e.target.checked)}}
+        checked={done} 
         />
       </Form.Group>
       <Button variant="success" 
       onClick={()=>{
-        console.log(props.takeId)
-        const datosActualizar = {
-          name: props.takeName,
-          description: props.takeDescription,
-          number: props.takeNumber,
-          done: props.takeDone,
-        }
-        props.Editar(props.takeId, datosActualizar)
+        props.Editar(props.task.id, { name, description, number, done })
       }}>
       Actualizar
       </Button>
@@ -71,4 +75,4 @@ const Formulario2 = (props) => {
   )
 }
 
-export default Formulario2
+export default Formulario2Otro
