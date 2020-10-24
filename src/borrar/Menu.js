@@ -1,8 +1,11 @@
 import React from 'react'
-import { Nav, Navbar } from 'react-bootstrap'
+import { Button, Nav, Navbar } from 'react-bootstrap'
+import { NavLink, useHistory } from 'react-router-dom'
 import logo from '../logo.svg'
 
-const Menu = () => {
+const Menu = props => {
+  const history = useHistory()
+  
   return (
   <Navbar bg="dark" variant="dark">
 
@@ -14,12 +17,23 @@ const Menu = () => {
         className="d-inline-block align-top"
         alt="React Bootstrap logo"
       />
-        </Navbar.Brand>
+      {props.isAuth ? `Welcome ${props.name}` : "Welcome user"}
+      </Navbar.Brand>
 
     
     <Nav className="mr-auto">
-      <Nav.Link href="#home">Inicio</Nav.Link>
+      {props.isAuth ? (
+        <Nav.Link as={NavLink} to="/" >Tareas</Nav.Link>
+      ) : (
+        <Nav.Link as={NavLink} to="/login" >Login</Nav.Link>
+      )}
+      <Nav.Link as={NavLink} to="/info" >Info</Nav.Link>
     </Nav>
+    {props.isAuth && (<Button onClick={() => {
+      localStorage.removeItem("token")
+      props.setIsAuth(false)
+      history.push("/")
+    }}>Logout</Button>)}
   </Navbar>
   )
 }
